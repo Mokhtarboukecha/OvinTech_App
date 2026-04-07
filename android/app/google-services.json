@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "332651649699",
+    "project_id": "ovintech-320d7",
+    "storage_bucket": "ovintech-320d7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:332651649699:android:a62ed15873ad4f26983d16",
+        "android_client_info": {
+          "package_name": "com.example.my_new_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqN2R6bl3t5QQm93C9qBpkBj2qwozEOWY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
