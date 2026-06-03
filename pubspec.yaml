@@ -45,6 +45,9 @@ dependencies:
   font_awesome_flutter: ^10.12.0
   flutter_svg: ^2.2.4
   xml_rpc: ^0.5.1
+  fl_chart: ^1.2.0
+  shared_preferences: ^2.2.2
+  flutter_launcher_icons: ^0.14.4
   
 
 dev_dependencies:
@@ -52,7 +55,7 @@ dev_dependencies:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "images/icon.jpg"
+  image_path: "images/logo2-removebg-preview.png"
   min_sdk_android: 21 # android min sdk min:16, default 21
 
   flutter_test:
@@ -114,3 +117,4 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+  # تأكد أن هذا السطر يبدأ من أول الطرف تماماً بدون أي مسافة قبله

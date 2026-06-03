@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:my_new_app/auth_service.dart';
 
 class Addsheep extends StatefulWidget {
   const Addsheep({super.key});
@@ -40,6 +41,9 @@ class _AddsheepState extends State<Addsheep> {
   Future<void> _fetchBreeds() async {
     final response = await http.get(
       Uri.parse('http://192.168.1.3:8000/api/breeds/'),
+      headers: {
+    'Authorization': 'Bearer ${AuthService.token}',
+  },
     );
     if (response.statusCode == 200) {
       setState(() {
@@ -102,7 +106,7 @@ class _AddsheepState extends State<Addsheep> {
 
     final response = await http.post(
       Uri.parse('http://192.168.1.3:8000/api/sheep/'),
-      headers: {'Content-Type': 'application/json'},
+      headers: {'Content-Type': 'application/json','Authorization': 'Bearer ${AuthService.token}',},
       body: jsonEncode(body),
     );
 

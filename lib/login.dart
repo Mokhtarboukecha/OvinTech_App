@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:my_new_app/auth_service.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -51,12 +52,32 @@ class _LoginState extends State<Login> {
 
     setState(() => _isLoading = false);
 
-    if (response.statusCode == 200) {
+    /*if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
+      AuthService.token = data['access'];
       // يمكنك حفظ الـ token هنا لاحقاً
       print("Token: ${data['access']}");
       Navigator.of(context).pushReplacementNamed("homepage");
-    } else {
+    }*/
+   /* if (response.statusCode == 200) {
+  final data = jsonDecode(response.body);
+  AuthService.token = data['access'];
+  AuthService.firstName = data['first_name'];
+  AuthService.lastName = data['last_name'];
+  AuthService.email = data['email'];
+  Navigator.of(context).pushReplacementNamed("homepage");
+}*/
+if (response.statusCode == 200) {
+  final data = jsonDecode(response.body);
+  await AuthService.saveUser(
+    token: data['access'],
+    firstName: data['first_name'],
+    lastName: data['last_name'],
+    email: data['email'],
+  );
+  Navigator.of(context).pushReplacementNamed("homepage");
+}
+    else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: const Text("Invalid email or password"),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:my_new_app/auth_service.dart';
 
 class VacDetail extends StatefulWidget {
   final dynamic vaccine;
@@ -31,7 +32,7 @@ class _VacDetailState extends State<VacDetail> {
     final response = await http.put(
       Uri.parse(
           'http://192.168.1.3:8000/api/vaccines/${widget.vaccine['id']}/'),
-      headers: {'Content-Type': 'application/json'},
+      headers: {'Content-Type': 'application/json','Authorization': 'Bearer ${AuthService.token}',},
       body: jsonEncode({
         'name': _nameController.text,
         'given_every_days': int.parse(_daysController.text),
@@ -77,6 +78,9 @@ class _VacDetailState extends State<VacDetail> {
       await http.delete(
         Uri.parse(
             'http://192.168.1.3:8000/api/vaccines/${widget.vaccine['id']}/'),
+            headers: {
+    'Authorization': 'Bearer ${AuthService.token}',
+  },
       );
       Navigator.pop(context, true);
     }

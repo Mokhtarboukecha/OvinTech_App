@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:my_new_app/auth_service.dart';
 
 class BreedDetail extends StatefulWidget {
   final dynamic breed;
@@ -28,7 +29,7 @@ class _BreedDetailState extends State<BreedDetail> {
     final response = await http.put(
       Uri.parse(
           'http://192.168.1.3:8000/api/breeds/${widget.breed['id']}/'),
-      headers: {'Content-Type': 'application/json'},
+      headers: {'Content-Type': 'application/json','Authorization': 'Bearer ${AuthService.token}',},
       body: jsonEncode({'name': _nameController.text}),
     );
 
@@ -68,6 +69,9 @@ class _BreedDetailState extends State<BreedDetail> {
       await http.delete(
         Uri.parse(
             'http://10.0.2.2:8000/api/breeds/${widget.breed['id']}/'),
+            headers: {
+    'Authorization': 'Bearer ${AuthService.token}',
+  },
       );
       Navigator.pop(context, true);
     }

@@ -3,6 +3,8 @@
 
 import 'package:flutter/material.dart';
 import 'dart:convert';
+import 'package:my_new_app/auth_service.dart';
+import 'package:http/http.dart' as http;
 import 'package:http/http.dart' as http;
 
 class Signup extends StatefulWidget {
@@ -24,9 +26,12 @@ class _SignupState extends State<Signup> {
 
   Future<void> _signup() async {
     if (_firstNameController.text.isEmpty ||
+    _lastNameController.text.isEmpty ||
+    _emailController.text.isEmpty || _passwordController.text.isEmpty)
+    /*if (_firstNameController.text.isEmpty ||
         _lastNameController.text.isEmpty ||
         _emailController.text.isEmpty ||
-        _passwordController.text.isEmpty) {
+        _passwordController.text.isEmpty) */{
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Please fill all fields"),
@@ -63,9 +68,33 @@ class _SignupState extends State<Signup> {
 
     setState(() => _isLoading = false);
 
-    if (response.statusCode == 201) {
+    /*if (response.statusCode == 201) {
       Navigator.of(context).pushReplacementNamed("homepage");
-    } else {
+    } */
+    if (response.statusCode == 201) {
+  // 
+  final loginResponse = await http.post(
+    Uri.parse('http://192.168.1.3:8000/api/auth/login/'),
+    headers: {'Content-Type': 'application/json'},
+    body: jsonEncode({
+      'email': _emailController.text.trim(),
+      'password': _passwordController.text,
+    }),
+  );
+
+  if (loginResponse.statusCode == 200) {
+    final data = jsonDecode(loginResponse.body);
+    await AuthService.saveUser(
+      token: data['access'],
+      firstName: data['first_name'],
+      lastName: data['last_name'],
+      email: data['email'],
+    );
+  }
+
+  Navigator.of(context).pushReplacementNamed("homepage");
+}
+    else {
       final error = jsonDecode(response.body);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
